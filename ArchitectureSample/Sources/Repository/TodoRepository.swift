@@ -22,7 +22,11 @@ public final actor TodoRepository: TodoRepositoryProtocol {
     }
     
     public func save(model: TodoModel) {
-        todos.append(model)
+        if let index = todos.firstIndex(where: { $0.id == model.id }) {
+            todos[index] = model
+        } else {
+            todos.append(model)
+        }
     }
     
     public func delete(id: UUID) {

@@ -17,18 +17,26 @@ public struct TodoDetailScene: View {
     }
 
     public var body: some View {
-        Group {
+        VStack {
             modelInfoView(model: state.model)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(
-                            action: { state.isShownDeleteAlert = true },
-                            label: { Image(systemName: "trash") }
-                        )
-                    }
+            Button(
+                action: {
+                    state.toggleFinishFlg()
+                },
+                label: {
+                    Text(state.model.isFinish ? "未完了" : "完了")
                 }
+            )
         }
         .navigationTitle("todo詳細")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: { state.isShownDeleteAlert = true },
+                    label: { Image(systemName: "trash") }
+                )
+            }
+        }
         .alert("",isPresented: $state.isShownDeleteAlert) {
             Button(
                 role: .cancel,

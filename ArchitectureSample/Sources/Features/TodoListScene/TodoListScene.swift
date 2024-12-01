@@ -34,6 +34,7 @@ private extension TodoListScene {
         List(state.todos, id: \.self) { todo in
             NavigationLink(value: AppScene.todoDetailScene(model: todo)) {
                 Text(todo.title)
+                    .strikethrough(todo.isFinish)
             }
         }
     }
