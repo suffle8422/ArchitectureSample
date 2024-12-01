@@ -21,9 +21,9 @@ public final class TodoListSceneState {
     ) {
         self.router = router
         self.todoRepository = todoRepository
+    }
 
-        Task {
-            todos = await todoRepository.fetch()
-        }
+    func fetchTodos() {
+        Task { todos = await todoRepository.fetch() }
     }
 }

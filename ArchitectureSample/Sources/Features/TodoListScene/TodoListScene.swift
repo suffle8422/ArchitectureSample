@@ -22,6 +22,9 @@ public struct TodoListScene: View {
                 .navigationDestination(for: AppScene.self) { scene in
                     state.router.show(scene)
                 }
+                .onAppear {
+                    state.fetchTodos()
+                }
         }
     }
 }
