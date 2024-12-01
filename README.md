@@ -59,6 +59,6 @@ var publisher: AnyPublisher<Results<HogeModel>, any Error> {
 }
 ```
 
-SwiftDataを利用する場合、sceneState内で@queryが利用できない。
+SwiftDataを利用する場合、sceneState内で`@query`が利用できない。
 また、combineを利用して更新通知を受け取ることは2024-12-01現在ではできない。
 手動でfetchするか、notificationCenterからdidSave通知を受け取ってから更新する必要がある。
