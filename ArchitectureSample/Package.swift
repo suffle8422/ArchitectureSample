@@ -57,6 +57,15 @@ package.targets = [
         ],
         path: "\(String.featuresBasePath)/\(String.todoDetailScene)"
     ),
+
+    // MARK: - Tests
+    .testTarget(
+        name: .repository.tests,
+        dependencies: [
+            .core,
+            .repository
+        ]
+    )
 ]
 
 
@@ -71,6 +80,10 @@ private extension String {
     static let todoDetailScene = "TodoDetailScene"
 
     static let featuresBasePath = "Sources/Features"
+
+    var tests: String {
+        self + "Tests"
+    }
 }
 
 private extension Target.Dependency {

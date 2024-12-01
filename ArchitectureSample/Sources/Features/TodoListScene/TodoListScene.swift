@@ -19,6 +19,14 @@ public struct TodoListScene: View {
         NavigationStack {
             todoListView()
                 .navigationTitle("TODOリスト")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(
+                            action: { state.saveTodo() },
+                            label: { Image(systemName: "plus")}
+                        )
+                    }
+                }
                 .navigationDestination(for: AppScene.self) { scene in
                     state.router.show(scene)
                 }

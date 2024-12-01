@@ -5,6 +5,7 @@
 //  Created by ionishi on 2024/11/30.
 //
 
+import Foundation
 import Observation
 import Core
 
@@ -25,5 +26,18 @@ public final class TodoListSceneState {
 
     func fetchTodos() {
         Task { todos = await todoRepository.fetch() }
+    }
+
+    func saveTodo() {
+        let uuid = UUID()
+        let todo = TodoModel(
+            id: uuid,
+            title: Date().formattedString,
+            detail: uuid.uuidString
+        )
+        Task {
+            await todoRepository.save(model: todo)
+            todos = await todoRepository.fetch()
+        }
     }
 }

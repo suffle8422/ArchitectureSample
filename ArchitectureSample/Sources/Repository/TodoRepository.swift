@@ -13,9 +13,7 @@ import Core
 public final actor TodoRepository: TodoRepositoryProtocol {
     private var todos = [TodoModel]()
 
-    public init() {
-        Task { await setSampleTodos() }
-    }
+    public init() {}
 
     public func fetch() -> [TodoModel] {
         return todos
@@ -31,21 +29,5 @@ public final actor TodoRepository: TodoRepositoryProtocol {
     
     public func delete(id: UUID) {
         todos = todos.filter { $0.id != id }
-    }
-    
-    private func setSampleTodos() {
-        var newSampleTodos = [TodoModel]()
-
-        for index in 1...30 {
-            newSampleTodos.append(
-                TodoModel(
-                    id: UUID(),
-                    title: "タイトル \(index)",
-                    detail: "詳細 \(index)"
-                )
-            )
-        }
-
-        todos = newSampleTodos
     }
 }
