@@ -8,6 +8,5 @@
 import Core
 
 public final actor TodoRepository: TodoRepositoryProtocol {
-    private init() {}
-    public static let shared: TodoRepository = TodoRepository()
+    public init() {}
 }
