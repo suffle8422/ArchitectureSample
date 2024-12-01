@@ -22,7 +22,9 @@ public struct TodoListScene: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(
-                            action: { state.saveTodo() },
+                            action: {
+                                Task { await state.saveTodo() }
+                            },
                             label: { Image(systemName: "plus")}
                         )
                     }
@@ -31,7 +33,7 @@ public struct TodoListScene: View {
                     state.router.show(scene)
                 }
                 .onAppear {
-                    state.fetchTodos()
+                    Task { await state.fetchTodos() }
                 }
         }
     }

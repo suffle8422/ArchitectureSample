@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "EB78C5BB-9AFC-405C-84F2-8503B0423E67",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/ArchitectureSample",
+        "identifier" : "RepositoryTests",
+        "name" : "RepositoryTests"
+      }
+    }
+  ],
+  "version" : 1
+}

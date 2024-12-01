@@ -65,6 +65,14 @@ package.targets = [
             .core,
             .repository
         ]
+    ),
+    .testTarget(
+        name: "FeatureTests",
+        dependencies: [
+            .core,
+            .todoListScene,
+            .todoDetailScene
+        ]
     )
 ]
 

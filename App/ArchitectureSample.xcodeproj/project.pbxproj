@@ -15,9 +15,22 @@
 		D4EE323C2CFB065B00D70D98 /* ArchitectureSample */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ArchitectureSample; path = ../ArchitectureSample; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D4DACEB92CFC72C700FE498E /* Exceptions for "ArchitectureSample" folder in "ArchitectureSample" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ArchitectureSampleTestPlan.xctestplan,
+			);
+			target = D4EE31F42CFB058D00D70D98 /* ArchitectureSample */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D4EE31F72CFB058D00D70D98 /* ArchitectureSample */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D4DACEB92CFC72C700FE498E /* Exceptions for "ArchitectureSample" folder in "ArchitectureSample" target */,
+			);
 			path = ArchitectureSample;
 			sourceTree = "<group>";
 		};

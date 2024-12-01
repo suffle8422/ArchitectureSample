@@ -21,7 +21,7 @@ public struct TodoDetailScene: View {
             modelInfoView(model: state.model)
             Button(
                 action: {
-                    state.toggleFinishFlg()
+                    Task { await state.toggleFinishFlg() }
                 },
                 label: {
                     Text(state.model.isFinish ? "未完了" : "完了")
