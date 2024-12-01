@@ -7,14 +7,13 @@
 
 import SwiftUI
 import App
-import Core
 
 @main
 struct ArchitectureSampleApp: App {
     private let router = AppEnvironment.shared.router
     var body: some Scene {
         WindowGroup {
-            router.show(.mainScene)
+            router.show(.todoListScene)
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 /// 遷移先に指定できる画面を表すenumクラス
-public enum AppScene {
-    case mainScene
+public enum AppScene: Hashable {
+    case todoListScene
+    case todoDetailScene(model: TodoModel)
 }

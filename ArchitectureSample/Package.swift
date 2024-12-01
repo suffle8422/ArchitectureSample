@@ -20,11 +20,19 @@ package.targets = [
         name: .app,
         dependencies: [
             .core,
+            .coreUI,
             .repository,
-            .mainScene
+            .todoListScene,
+            .todoDetailScene
         ]
     ),
     .target(name: .core),
+    .target(
+        name: .coreUI,
+        dependencies: [
+            .core
+        ]
+    ),
     .target(
         name: .repository,
         dependencies: [
@@ -34,23 +42,33 @@ package.targets = [
 
     // MARK: - Features
     .target(
-        name: .mainScene,
+        name: .todoListScene,
         dependencies: [
             .core,
             .repository
         ],
-        path: "\(String.featuresBasePath)/\(String.mainScene)"
-    )
+        path: "\(String.featuresBasePath)/\(String.todoListScene)"
+    ),
+    .target(
+        name: .todoDetailScene,
+        dependencies: [
+            .core,
+            .repository
+        ],
+        path: "\(String.featuresBasePath)/\(String.todoDetailScene)"
+    ),
 ]
 
 
 private extension String {
     static let app = "App"
     static let core = "Core"
+    static let coreUI = "CoreUI"
     static let repository = "Repository"
 
     // MARK: Features
-    static let mainScene = "MainScene"
+    static let todoListScene = "TodoListScene"
+    static let todoDetailScene = "TodoDetailScene"
 
     static let featuresBasePath = "Sources/Features"
 }
@@ -58,8 +76,10 @@ private extension String {
 private extension Target.Dependency {
     static let app = Self.target(name: .app)
     static let core = Self.target(name: .core)
+    static let coreUI = Self.target(name: .coreUI)
     static let repository = Self.target(name: .repository)
 
     // MARK: Features
-    static let mainScene = Self.target(name: .mainScene)
+    static let todoListScene = Self.target(name: .todoListScene)
+    static let todoDetailScene = Self.target(name: .todoDetailScene)
 }

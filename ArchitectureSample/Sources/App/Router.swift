@@ -7,23 +7,43 @@
 
 import SwiftUI
 import Core
-import MainScene
+import CoreUI
+import TodoListScene
+import TodoDetailScene
 
+@MainActor
 public struct Router: RouterProtocol {
-    init() {}
-
-    @MainActor
     public func show(_ scene: AppScene) -> AnyView {
         let sceneView = makeSceneView(scene)
         return AnyView(sceneView)
     }
 
-    @MainActor
-    private func makeSceneView(_ scene: AppScene) -> some View {
+    private func makeSceneView(_ scene: AppScene) -> any View {
         switch scene {
-        case .mainScene:
-            let state = MainSceneState(todoRepository: AppEnvironment.shared.todoRepositroy)
-            return MainScene(state: state)
+        case .todoListScene:
+            let state = TodoListSceneState(
+                router: AppEnvironment.shared.router,
+                todoRepository: AppEnvironment.shared.todoRepositroy
+            )
+            return buildView(TodoListScene(state: state))
+
+        case let .todoDetailScene(model):
+            let state = TodoDetailSceneState(
+                model: model,
+                todoRepository: AppEnvironment.shared.todoRepositroy
+            )
+            return buildView(TodoDetailScene(state: state))
         }
+    }
+
+    private func buildView<Content: View>(_ content: Content) -> some View {
+        LazyView(
+            ZStack {
+                Color.white
+                    .ignoresSafeArea(edges: [.bottom])
+                content
+            }
+        )
+
     }
 }

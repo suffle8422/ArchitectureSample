@@ -8,10 +8,21 @@
 import Foundation
 
 /// 1件のTodoを表すモデル
-public struct TodoModel: Sendable {
-    let id: UUID
-    let title: String
-    let detail: String
-    let dueDate: Date
-    let isFinish: Bool
+public struct TodoModel: Hashable, Sendable {
+    public let id: UUID
+    public let title: String
+    public let detail: String
+    public let isFinish: Bool
+
+    public init(
+        id: UUID,
+        title: String,
+        detail: String,
+        isFinish: Bool = false
+    ) {
+        self.id = id
+        self.title = title
+        self.detail = detail
+        self.isFinish = isFinish
+    }
 }

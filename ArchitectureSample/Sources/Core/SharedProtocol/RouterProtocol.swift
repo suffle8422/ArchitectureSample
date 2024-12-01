@@ -7,7 +7,8 @@
 
 import SwiftUI
 
+@MainActor
 public protocol RouterProtocol: Sendable {
-    @MainActor
+    /// AppSceneに対応したViewを型消去して返す関数
     func show(_ scene: AppScene) -> AnyView
 }

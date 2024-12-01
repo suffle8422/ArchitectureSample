@@ -12,6 +12,6 @@ import Repository
 public final class AppEnvironment: Sendable {
     public static let shared: AppEnvironment = AppEnvironment()
 
-    public let todoRepositroy: any TodoRepositoryProtocol = TodoRepository()
     public let router: any RouterProtocol = Router()
+    public let todoRepositroy: any TodoRepositoryProtocol = TodoRepository()
 }
