@@ -45,3 +45,20 @@ Repositoryはactor isolatedするので、境界がわかりやすい
 routerでは画面の数だけswitch文で分岐するような構造になっているため、画面数が増えるに従って肥大化して見通しが悪くなる
 ただし、画面を全てenumでまとめているため、定義漏れなどは発生しない
 処理内容としてはsceneStateに必要なオブジェクトをDIした後に、sceneを作成して返しているだけなので複雑な処理はしていない
+
+## その他
+### ローカルDBを管理するrepositoryとsceneStateとのバインディング
+現状、sceneStateはrepositoryの関数を呼び出すことで最新の値を取得する仕組みになっている
+できれば、ローカルDBの内容とsceneStateの内容をうまくバインディングしてfetchを何度も行わずに済むようにしたい
+
+realmを利用する場合は、resultsをcombineのpublisherに変換することで任意のresultsに変化があれば通知される
+```
+var publisher: AnyPublisher<Results<HogeModel>, any Error> {
+    let results = realm.objects(HogeModel.self)
+    return results.collectionPublisher.freeze().eraseToAnyPublisher()
+}
+```
+
+SwiftDataを利用する場合、sceneState内で@queryが利用できない
+また、combineを利用して更新通知を受け取ることは2024-12-01現在ではできない
+手動でfetchするか、notificationCenterからdidSave通知を受け取ってから更新する必要がある
