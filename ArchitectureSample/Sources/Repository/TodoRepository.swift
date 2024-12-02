@@ -11,7 +11,7 @@ import Core
 
 @ModelActor
 public final actor TodoRepository: TodoRepositoryProtocol, Sendable {
-    nonisolated private var modelContext: ModelContext { modelExecutor.modelContext }
+    private nonisolated var modelContext: ModelContext { modelExecutor.modelContext }
 
     public nonisolated func fetch() -> [TodoModel] {
         let fetchDescriptor = FetchDescriptor<TodoModel>()
