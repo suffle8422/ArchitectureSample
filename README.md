@@ -47,11 +47,16 @@ routerでは画面の数だけswitch文で分岐するような構造になっ�
 処理内容としてはsceneStateに必要なオブジェクトをDIした後に、sceneを作成して返しているだけなので複雑な処理はしていない。
 
 ## その他
-### ローカルDBを管理するrepositoryとsceneStateとのバインディング
-現状、sceneStateはrepositoryの関数を呼び出すことで最新の値を取得する仕組みになっている。
-できれば、ローカルDBの内容とsceneStateの内容をうまくバインディングしてfetchを何度も行わずに済むようにしたい。
+### Repository/sceneState間のデータの受け渡し
+`actor isolated`したrepositoryと、`MainActor isolated`したSceneState間でデータを受け渡す際、actor境界をまたぐことになる。
+受け渡す型をSendableにする、値の取得を行う関数をnonisolatedにするなどの対策が必要。
 
-realmを利用する場合は、resultsをcombineのpublisherに変換することで任意のresultsに変化があれば通知される。
+このサンプルでは、SwiftDataで値を保存しているが、modelクラスはスレッドセーフではないのでSendableにできない。
+Repository側で、読み取り専用のSendableな型に変換してから渡したり、値を取得する関数だけnonisolatedにしたりする必要がある。
+このサンプルでは実装をシンプルにするため後者を採用している。
+
+### Realmを利用した場合のRepository/SceneState間のデータの受け渡し
+realmを利用する場合は、results型をcombineのpublisherに変換することで任意のクエリの結果に変化があれば通知される。
 ```
 var publisher: AnyPublisher<Results<HogeModel>, any Error> {
     let results = realm.objects(HogeModel.self)
