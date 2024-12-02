@@ -29,8 +29,8 @@ struct TodoListSceneStateTests {
     }
 
     @Test
-    func saveTodo() async {
-        await sceneState.saveTodo()
-        #expect(await mockTodoRepository.countSave == 1, "save関数が1度だけ呼ばれる")
+    func insertTodo() async {
+        await sceneState.insertTodo()
+        #expect(await mockTodoRepository.countInsert == 1, "insert関数が1度だけ呼ばれる")
     }
 }

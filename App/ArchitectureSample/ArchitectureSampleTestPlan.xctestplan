@@ -14,16 +14,16 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "FeatureTests",
-        "name" : "FeatureTests"
+        "containerPath" : "container:..\/ArchitectureSample",
+        "identifier" : "RepositoryTests",
+        "name" : "RepositoryTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "RepositoryTests",
-        "name" : "RepositoryTests"
+        "containerPath" : "container:..\/ArchitectureSample",
+        "identifier" : "FeatureTests",
+        "name" : "FeatureTests"
       }
     }
   ],

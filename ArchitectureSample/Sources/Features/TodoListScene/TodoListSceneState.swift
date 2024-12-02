@@ -29,7 +29,7 @@ public final class TodoListSceneState {
     }
 
     func insertTodo() async {
-        await todoRepository.insert(title: Date().formattedString, detail: "詳細情報")
+        await todoRepository.insert(id: UUID(), title: Date().formattedString, detail: "詳細情報")
         todos = todoRepository.fetch()
     }
 }

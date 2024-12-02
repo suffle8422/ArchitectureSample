@@ -8,13 +8,14 @@
 import Foundation
 import Core
 
-actor MockTodoRepository: TodoRepositoryProtocol {
+class MockTodoRepository: TodoRepositoryProtocol, @unchecked Sendable {
     /// 呼び出し回数をカウントするプロパティ
     var countFetch = 0
-    var countSave = 0
+    var countInsert = 0
     var countDelete = 0
+    var countUpdate = 0
 
-    func fetch() async -> [TodoModel] {
+    func fetch() -> [TodoModel] {
         countFetch += 1
         var todos = [TodoModel]()
         for index in 1...3 {
@@ -29,8 +30,8 @@ actor MockTodoRepository: TodoRepositoryProtocol {
         return todos
     }
     
-    func save(model: TodoModel) async {
-        countSave += 1
+    func insert(id: UUID, title: String, detail: String) async {
+        countInsert += 1
         debugPrint("save!")
     }
     
@@ -38,4 +39,10 @@ actor MockTodoRepository: TodoRepositoryProtocol {
         countDelete += 1
         debugPrint("delete!")
     }
+
+    func update(id: UUID, title: String, detail: String, isFinish: Bool) async {
+        countUpdate += 1
+        debugPrint("update!")
+    }
+
 }

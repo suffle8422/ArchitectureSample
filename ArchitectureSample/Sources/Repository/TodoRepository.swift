@@ -12,7 +12,7 @@ import Core
 /// TODO用のRepository
 /// todosプロパティを利用した簡易的な実装になっている
 @ModelActor
-public final actor TodoRepository: TodoRepositoryProtocol {
+public final actor TodoRepository: TodoRepositoryProtocol, Sendable {
     nonisolated private var modelContext: ModelContext { modelExecutor.modelContext }
 
     public nonisolated func fetch() -> [TodoModel] {
@@ -21,8 +21,8 @@ public final actor TodoRepository: TodoRepositoryProtocol {
         return todos ?? []
     }
 
-    public func insert(title: String, detail: String) {
-        let todo = TodoModel(id: UUID(), title: title, detail: detail)
+    public func insert(id: UUID, title: String, detail: String) {
+        let todo = TodoModel(id: id, title: title, detail: detail)
         modelContext.insert(todo)
         try? modelContext.save()
     }

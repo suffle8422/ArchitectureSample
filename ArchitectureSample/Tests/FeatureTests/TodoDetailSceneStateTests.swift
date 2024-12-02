@@ -33,7 +33,7 @@ struct TodoDetailSceneStateTests {
     func toggleFinishFlg() async {
         await sceneState.toggleFinishFlg()
         #expect(!todoModel.isFinish, "isFinishプロパティがfalseになっている")
-        #expect(await mockTodoRepository.countSave == 1, "save関数が1度だけ呼び出されている")
+        #expect(await mockTodoRepository.countUpdate == 1, "update関数が1度だけ呼び出されている")
     }
 
     @Test

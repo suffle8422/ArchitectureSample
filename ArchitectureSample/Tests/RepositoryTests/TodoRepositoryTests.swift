@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 import Testing
 @testable import Core
 @testable import Repository
@@ -14,57 +15,51 @@ actor TodoRepositoryTests {
     let todoRepository: TodoRepository
 
     init() async {
-        todoRepository = TodoRepository()
+        let schema = Schema([TodoModel.self])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        let modelContainer = try! ModelContainer(for: schema, configurations: modelConfiguration)
+        todoRepository = TodoRepository(modelContainer: modelContainer)
+    }
+
+    deinit {
     }
 
     @Test
     func fetch() async {
         await todoRepository.setTestTodos()
-        let fetchedTodos = await todoRepository.fetch()
+        let fetchedTodos = todoRepository.fetch()
         #expect(fetchedTodos.count == 10, "10件全てfetchできている")
     }
 
-    @Test("新規作成時のsave関数のテスト")
-    func save_idNotDuplicated() async {
-        let todosBeforeSaving = await todoRepository.fetch()
-        #expect(todosBeforeSaving.count == 0, "save前はTODOが0件")
+    @Test
+    func insert() async {
+        let todosBeforeInserting = todoRepository.fetch()
+        #expect(todosBeforeInserting.count == 0, "insert前はTODOが0件")
 
-        let todo = TodoModel(
+        await todoRepository.insert(
             id: UUID(),
             title: "タイトル1",
             detail: "詳細1"
         )
 
-        await todoRepository.save(model: todo)
-
-        let todosAfterSaving = await todoRepository.fetch()
-        #expect(todosAfterSaving.count == 1, "save後はtodoが1件")
+        let todosAfterInserting = todoRepository.fetch()
+        #expect(todosAfterInserting.count == 1, "insert後はtodoが1件")
     }
 
-    @Test("更新時のsave関数のテスト")
-    func save_idDuplicated() async throws {
+    @Test
+    func update() async throws {
         let id = UUID()
-        let todo1 = TodoModel(
-            id: id,
-            title: "タイトル1",
-            detail: "詳細1"
-        )
-        await todoRepository.save(model: todo1)
+        await todoRepository.insert(id: id, title: "タイトル1", detail: "詳細1")
 
-        let todosBeforeSaving = await todoRepository.fetch()
-        #expect(todosBeforeSaving.count == 1, "save前はTODOが1件")
+        let todosBeforeUpdating = todoRepository.fetch()
+        #expect(todosBeforeUpdating.count == 1, "update前はTODOが1件")
 
-        let todo2 = TodoModel(
-            id: id,
-            title: "タイトル2",
-            detail: "詳細2"
-        )
-        await todoRepository.save(model: todo2)
+        await todoRepository.update(id: id, title: "タイトル2", detail: "詳細2", isFinish: false)
 
-        let todosAfterSaving = await todoRepository.fetch()
-        #expect(todosAfterSaving.count == 1, "save後もTODOが1件")
+        let todosAfterUpdating = todoRepository.fetch()
+        #expect(todosAfterUpdating.count == 1, "save後もTODOが1件")
 
-        let targetTodo = try #require(todosAfterSaving.first)
+        let targetTodo = try #require(todosAfterUpdating.first)
         #expect(targetTodo.title == "タイトル2", "タイトルが更新されている")
         #expect(targetTodo.detail == "詳細2", "詳細が更新されている")
     }
@@ -72,19 +67,14 @@ actor TodoRepositoryTests {
     @Test
     func delete() async {
         let id = UUID()
-        let todo1 = TodoModel(
-            id: id,
-            title: "タイトル1",
-            detail: "詳細1"
-        )
-        await todoRepository.save(model: todo1)
+        await todoRepository.insert(id: id, title: "タイトル1", detail: "詳細1")
 
-        let todosBeforeDeleting = await todoRepository.fetch()
+        let todosBeforeDeleting = todoRepository.fetch()
         #expect(todosBeforeDeleting.count == 1, "delete前はTODOが1件")
 
         await todoRepository.delete(id: id)
 
-        let todosAfterDeleting = await todoRepository.fetch()
+        let todosAfterDeleting = todoRepository.fetch()
         #expect(todosAfterDeleting.count == 0, "delete後はTODOが0件")
 
 
@@ -95,12 +85,10 @@ actor TodoRepositoryTests {
 private extension TodoRepository {
     func setTestTodos() {
         for index in 1...10 {
-            save(model:
-                TodoModel(
-                    id: UUID(),
-                    title: "タイトル \(index)",
-                    detail: "詳細 \(index)"
-                )
+            insert(
+                id: UUID(),
+                title: "タイトル\(index)",
+                detail: "詳細\(index)"
             )
         }
     }

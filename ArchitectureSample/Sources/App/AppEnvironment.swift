@@ -19,7 +19,9 @@ public final class AppEnvironment: Sendable {
     public let todoRepository: any TodoRepositoryProtocol
 
     public init() {
-        modelContainer = try! ModelContainer(for: TodoModel.self)
+        let schema = Schema([TodoModel.self])
+        let modelConfiguration = ModelConfiguration(schema: schema)
+        modelContainer = try! ModelContainer(for: schema, configurations: modelConfiguration)
         todoRepository = TodoRepository(modelContainer: modelContainer)
     }
 }

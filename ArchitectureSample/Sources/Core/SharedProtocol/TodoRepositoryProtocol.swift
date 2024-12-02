@@ -10,14 +10,13 @@ import Foundation
 
 public protocol TodoRepositoryProtocol: Sendable {
     /// 保存されているTODOを全件取得する関数
-    /// SceneStateからの実行を前提として、MainActorで実行する
-    nonisolated func fetch() -> [TodoModel]
+    func fetch() -> [TodoModel]
 
     /// データの追加
     /// - parameters:
     ///  - title: タイトル
     ///  - detail: 詳細情報
-    func insert(title: String, detail: String) async
+    func insert(id: UUID, title: String, detail: String) async
 
     /// TODOを削除する関数
     /// - parameters:
