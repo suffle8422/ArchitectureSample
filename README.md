@@ -52,7 +52,7 @@ routerでは画面の数だけswitch文で分岐するような構造になっ�
 受け渡す型をSendableにする、値の取得を行う関数をnonisolatedにするなどの対策が必要。
 
 このサンプルでは、SwiftDataで値を保存しているが、modelクラスはスレッドセーフではないのでSendableにできない。
-Repository側で、読み取り専用のSendableな型に変換してから渡したり、値を取得する関数だけnonisolatedにしたりする必要がある。
+Repository側で、SendableなDTOオブジェクトに変換してから渡したり、値を取得する関数だけnonisolatedにしたりする必要がある。
 このサンプルでは実装をシンプルにするため後者を採用している。
 
 ### Realmを利用した場合のRepository/SceneState間のデータの受け渡し
