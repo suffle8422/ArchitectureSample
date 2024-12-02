@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Core
+import Repository
 
 public struct TodoDetailScene: View {
     @State var state: TodoDetailSceneState
@@ -68,4 +69,17 @@ private extension TodoDetailScene {
             Text("状態: \(model.isFinish ? "完了" : "未完了")")
         }
     }
+}
+
+#Preview {
+    TodoDetailScene(
+        state: TodoDetailSceneState(
+            model: TodoModel(
+                id: UUID(),
+                title: "タイトル",
+                detail: "詳細"
+            ),
+            todoRepository: MockTodoRepository()
+        )
+    )
 }

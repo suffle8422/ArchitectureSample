@@ -31,3 +31,34 @@ public protocol TodoRepositoryProtocol: Sendable {
     ///   - isFinish: 完了したかどうか
     func update(id: UUID, title: String, detail: String, isFinish: Bool) async
 }
+
+/// TodoRepositoryのプレビュー用Mockクラス
+public struct MockTodoRepository: TodoRepositoryProtocol, Sendable {
+    public init() {}
+
+    public func fetch() -> [TodoModel] {
+        var todos = [TodoModel]()
+        for index in 1...3 {
+            todos.append(
+                TodoModel(
+                    id: UUID(),
+                    title: "タイトル \(index)",
+                    detail: "詳細 \(index)"
+                )
+            )
+        }
+        return todos
+    }
+
+    public func insert(id: UUID, title: String, detail: String) async {
+        debugPrint("insert!")
+    }
+
+    public func delete(id: UUID) async {
+        debugPrint("delete!")
+    }
+
+    public func update(id: UUID, title: String, detail: String, isFinish: Bool) async {
+        debugPrint("update!")
+    }
+}

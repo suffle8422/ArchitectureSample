@@ -49,3 +49,12 @@ private extension TodoListScene {
         }
     }
 }
+
+#Preview {
+    TodoListScene(
+        state: TodoListSceneState(
+            router: MockRouter(),
+            todoRepository: MockTodoRepository()
+        )
+    )
+}
