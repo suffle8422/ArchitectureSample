@@ -9,7 +9,12 @@
     }
   ],
   "defaultOptions" : {
-
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ArchitectureSample.xcodeproj",
+      "identifier" : "D4EE31F42CFB058D00D70D98",
+      "name" : "ArchitectureSample"
+    }
   },
   "testTargets" : [
     {
