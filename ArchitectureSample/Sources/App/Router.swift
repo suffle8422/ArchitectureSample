@@ -24,14 +24,14 @@ public struct Router: RouterProtocol {
         case .todoListScene:
             let state = TodoListSceneState(
                 router: AppEnvironment.shared.router,
-                todoRepository: AppEnvironment.shared.todoRepositroy
+                todoRepository: AppEnvironment.shared.todoRepository
             )
             return buildView(TodoListScene(state: state))
 
         case let .todoDetailScene(model):
             let state = TodoDetailSceneState(
                 model: model,
-                todoRepository: AppEnvironment.shared.todoRepositroy
+                todoRepository: AppEnvironment.shared.todoRepository
             )
             return buildView(TodoDetailScene(state: state))
         }

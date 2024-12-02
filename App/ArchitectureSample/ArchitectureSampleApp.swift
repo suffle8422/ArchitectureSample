@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import SwiftData
 import App
+import Core
 
 @main
 struct ArchitectureSampleApp: App {
@@ -14,6 +16,7 @@ struct ArchitectureSampleApp: App {
     var body: some Scene {
         WindowGroup {
             router.show(.todoListScene)
+                .modelContainer(AppEnvironment.shared.modelContainer)
         }
     }
 }

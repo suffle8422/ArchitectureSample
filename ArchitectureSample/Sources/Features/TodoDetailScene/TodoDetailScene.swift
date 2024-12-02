@@ -62,7 +62,7 @@ public struct TodoDetailScene: View {
 private extension TodoDetailScene {
     func modelInfoView(model: TodoModel) -> some View {
         VStack {
-            Text("id: \(model.id.uuidString)")
+            Text("id: \(model.id)")
             Text("タイトル: \(model.title)")
             Text("詳細: \(model.detail)")
             Text("状態: \(model.isFinish ? "完了" : "未完了")")

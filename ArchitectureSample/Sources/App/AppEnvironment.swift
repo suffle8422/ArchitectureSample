@@ -5,6 +5,7 @@
 //  Created by ionishi on 2024/11/30.
 //
 
+import SwiftData
 import Core
 import Repository
 
@@ -13,5 +14,12 @@ public final class AppEnvironment: Sendable {
     public static let shared: AppEnvironment = AppEnvironment()
 
     public let router: any RouterProtocol = Router()
-    public let todoRepositroy: any TodoRepositoryProtocol = TodoRepository()
+
+    public let modelContainer: ModelContainer
+    public let todoRepository: any TodoRepositoryProtocol
+
+    public init() {
+        modelContainer = try! ModelContainer(for: TodoModel.self)
+        todoRepository = TodoRepository(modelContainer: modelContainer)
+    }
 }

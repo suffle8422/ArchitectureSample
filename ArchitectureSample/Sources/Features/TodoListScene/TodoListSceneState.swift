@@ -25,17 +25,11 @@ public final class TodoListSceneState {
     }
 
     func fetchTodos() async {
-        todos = await todoRepository.fetch()
+        todos = todoRepository.fetch()
     }
 
-    func saveTodo() async {
-        let uuid = UUID()
-        let todo = TodoModel(
-            id: uuid,
-            title: Date().formattedString,
-            detail: uuid.uuidString
-        )
-        await todoRepository.save(model: todo)
-        todos = await todoRepository.fetch()
+    func insertTodo() async {
+        await todoRepository.insert(title: Date().formattedString, detail: "詳細情報")
+        todos = todoRepository.fetch()
     }
 }

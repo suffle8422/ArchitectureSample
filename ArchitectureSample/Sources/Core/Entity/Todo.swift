@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import SwiftData
 
 /// 1件のTodoを表すモデル
-public struct TodoModel: Hashable, Sendable {
-    public let id: UUID
-    public let title: String
-    public let detail: String
-    public let isFinish: Bool
+@Model
+public class TodoModel {
+    @Attribute(.unique) public var id: UUID
+    public var title: String
+    public var detail: String
+    public var isFinish: Bool
 
     public init(
         id: UUID,

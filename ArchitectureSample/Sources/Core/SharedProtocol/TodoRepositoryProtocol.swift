@@ -5,19 +5,30 @@
 //  Created by ionishi on 2024/11/30.
 //
 
+import SwiftData
 import Foundation
 
 public protocol TodoRepositoryProtocol: Sendable {
     /// 保存されているTODOを全件取得する関数
-    func fetch() async -> [TodoModel]
+    /// SceneStateからの実行を前提として、MainActorで実行する
+    nonisolated func fetch() -> [TodoModel]
 
-    /// 同じidが存在すれば更新、なければ新規作成する関数
+    /// データの追加
     /// - parameters:
-    ///   - model: 更新対象の情報を持ったTodoModel
-    func save(model: TodoModel) async
+    ///  - title: タイトル
+    ///  - detail: 詳細情報
+    func insert(title: String, detail: String) async
 
     /// TODOを削除する関数
     /// - parameters:
-    ///   - id: 削除対象のid
+    ///   - id: 削除対象のモデルのid
     func delete(id: UUID) async
+
+    /// TODOの更新処理
+    /// - parameters:
+    ///   - id: 更新対象のid
+    ///   - title: タイトル
+    ///   - detail: 詳細
+    ///   - isFinish: 完了したかどうか
+    func update(id: UUID, title: String, detail: String, isFinish: Bool) async
 }

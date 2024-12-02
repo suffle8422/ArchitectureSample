@@ -26,14 +26,12 @@ public final class TodoDetailSceneState {
     }
 
     func toggleFinishFlg() async {
-        let model = TodoModel(
+        await todoRepository.update(
             id: model.id,
             title: model.title,
             detail: model.detail,
             isFinish: !model.isFinish
         )
-        await todoRepository.save(model: model)
-        self.model = model
     }
 
     func deleteTodo() async {

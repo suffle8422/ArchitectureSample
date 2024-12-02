@@ -23,7 +23,7 @@ public struct TodoListScene: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(
                             action: {
-                                Task { await state.saveTodo() }
+                                Task { await state.insertTodo() }
                             },
                             label: { Image(systemName: "plus")}
                         )
