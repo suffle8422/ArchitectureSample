@@ -8,6 +8,8 @@
 import Foundation
 import Core
 
+/// TodoRepositoryのテスト用のモッククラス
+/// 各関数の呼び出し回数をカウントする
 class MockTodoRepository: TodoRepositoryProtocol, @unchecked Sendable {
     /// 呼び出し回数をカウントするプロパティ
     var countFetch = 0

@@ -9,8 +9,6 @@ import Foundation
 import SwiftData
 import Core
 
-/// TODO用のRepository
-/// todosプロパティを利用した簡易的な実装になっている
 @ModelActor
 public final actor TodoRepository: TodoRepositoryProtocol, Sendable {
     nonisolated private var modelContext: ModelContext { modelExecutor.modelContext }
