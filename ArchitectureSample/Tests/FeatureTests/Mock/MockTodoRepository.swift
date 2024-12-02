@@ -34,7 +34,7 @@ class MockTodoRepository: TodoRepositoryProtocol, @unchecked Sendable {
     
     func insert(id: UUID, title: String, detail: String) async {
         countInsert += 1
-        debugPrint("save!")
+        debugPrint("insert!")
     }
     
     func delete(id: UUID) async {

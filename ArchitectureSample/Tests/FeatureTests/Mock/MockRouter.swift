@@ -8,6 +8,7 @@
 import SwiftUI
 import Core
 
+/// Routerのテスト用Mockクラス
 @MainActor
 struct MockRouter: RouterProtocol {
     public func show(_ scene: AppScene) -> AnyView {

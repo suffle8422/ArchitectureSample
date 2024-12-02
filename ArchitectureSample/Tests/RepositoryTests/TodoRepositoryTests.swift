@@ -57,7 +57,7 @@ actor TodoRepositoryTests {
         await todoRepository.update(id: id, title: "タイトル2", detail: "詳細2", isFinish: false)
 
         let todosAfterUpdating = todoRepository.fetch()
-        #expect(todosAfterUpdating.count == 1, "save後もTODOが1件")
+        #expect(todosAfterUpdating.count == 1, "update後もTODOが1件")
 
         let targetTodo = try #require(todosAfterUpdating.first)
         #expect(targetTodo.title == "タイトル2", "タイトルが更新されている")
