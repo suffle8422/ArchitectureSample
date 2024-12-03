@@ -7,8 +7,8 @@
 
 import Foundation
 import SwiftData
+import Core
 
-/// 1件のTodoを表すモデル
 @Model
 public class TodoModel {
     @Attribute(.unique) public var id: UUID
@@ -26,5 +26,14 @@ public class TodoModel {
         self.title = title
         self.detail = detail
         self.isFinish = isFinish
+    }
+
+    public func makeDTO() -> TodoDTO {
+        return TodoDTO(
+            id: id,
+            title: title,
+            detail: detail,
+            isFinish: isFinish
+        )
     }
 }

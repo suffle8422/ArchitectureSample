@@ -53,7 +53,7 @@ routerでは画面の数だけswitch文で分岐するような構造になっ�
 
 このサンプルでは、SwiftDataで値を保存しているが、modelクラスはスレッドセーフではないのでSendableにできない。
 Repository側で、SendableなDTOオブジェクトに変換してから渡したり、値を取得する関数だけnonisolatedにしたりする必要がある。
-このサンプルでは実装をシンプルにするため後者を採用している。
+このサンプルでは、SendableなDTOを用意して、SwiftDataのModelはRepositoryモジュール内に閉じ込めている。
 
 ### Realmを利用した場合のRepository/SceneState間のデータの受け渡し
 realmを利用する場合は、results型をcombineのpublisherに変換することで任意のクエリの結果に変化があれば通知される。

@@ -9,5 +9,5 @@
 /// 画面の生成に必要な情報もここで受け取る
 public enum AppScene: Hashable {
     case todoListScene
-    case todoDetailScene(model: TodoModel)
+    case todoDetailScene(model: TodoDTO)
 }

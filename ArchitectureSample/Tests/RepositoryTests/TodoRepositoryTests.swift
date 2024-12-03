@@ -27,36 +27,50 @@ actor TodoRepositoryTests {
     @Test
     func fetch() async {
         await todoRepository.setTestTodos()
-        let fetchedTodos = todoRepository.fetch()
+        let fetchedTodos = await todoRepository.fetch()
         #expect(fetchedTodos.count == 10, "10件全てfetchできている")
     }
 
     @Test
     func insert() async {
-        let todosBeforeInserting = todoRepository.fetch()
+        let todosBeforeInserting = await todoRepository.fetch()
         #expect(todosBeforeInserting.count == 0, "insert前はTODOが0件")
 
-        await todoRepository.insert(
+        let todo = TodoDTO(
             id: UUID(),
             title: "タイトル1",
-            detail: "詳細1"
+            detail: "詳細1",
+            isFinish: false
         )
+        await todoRepository.insert(dto: todo)
 
-        let todosAfterInserting = todoRepository.fetch()
+        let todosAfterInserting = await todoRepository.fetch()
         #expect(todosAfterInserting.count == 1, "insert後はtodoが1件")
     }
 
     @Test
     func update() async throws {
         let id = UUID()
-        await todoRepository.insert(id: id, title: "タイトル1", detail: "詳細1")
+        let todo1 = TodoDTO(
+            id: id,
+            title: "タイトル1",
+            detail: "詳細1",
+            isFinish: false
+        )
+        await todoRepository.insert(dto: todo1)
 
-        let todosBeforeUpdating = todoRepository.fetch()
+        let todosBeforeUpdating = await todoRepository.fetch()
         #expect(todosBeforeUpdating.count == 1, "update前はTODOが1件")
 
-        await todoRepository.update(id: id, title: "タイトル2", detail: "詳細2", isFinish: false)
+        let todo2 = TodoDTO(
+            id: id,
+            title: "タイトル2",
+            detail: "詳細2",
+            isFinish: false
+        )
+        await todoRepository.update(dto: todo2)
 
-        let todosAfterUpdating = todoRepository.fetch()
+        let todosAfterUpdating = await todoRepository.fetch()
         #expect(todosAfterUpdating.count == 1, "update後もTODOが1件")
 
         let targetTodo = try #require(todosAfterUpdating.first)
@@ -67,14 +81,20 @@ actor TodoRepositoryTests {
     @Test
     func delete() async {
         let id = UUID()
-        await todoRepository.insert(id: id, title: "タイトル1", detail: "詳細1")
+        let todo = TodoDTO(
+            id: id,
+            title: "タイトル1",
+            detail: "詳細1",
+            isFinish: false
+        )
+        await todoRepository.insert(dto: todo)
 
-        let todosBeforeDeleting = todoRepository.fetch()
+        let todosBeforeDeleting = await todoRepository.fetch()
         #expect(todosBeforeDeleting.count == 1, "delete前はTODOが1件")
 
         await todoRepository.delete(id: id)
 
-        let todosAfterDeleting = todoRepository.fetch()
+        let todosAfterDeleting = await todoRepository.fetch()
         #expect(todosAfterDeleting.count == 0, "delete後はTODOが0件")
 
 
@@ -85,11 +105,13 @@ actor TodoRepositoryTests {
 private extension TodoRepository {
     func setTestTodos() {
         for index in 1...10 {
-            insert(
+            let todo = TodoDTO(
                 id: UUID(),
                 title: "タイトル\(index)",
-                detail: "詳細\(index)"
+                detail: "詳細\(index)",
+                isFinish: false
             )
+            insert(dto: todo)
         }
     }
 }

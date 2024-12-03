@@ -5,18 +5,16 @@
 //  Created by ionishi on 2024/11/30.
 //
 
-import SwiftData
 import Foundation
 
 public protocol TodoRepositoryProtocol: Sendable {
     /// 保存されているTODOを全件取得する関数
-    func fetch() -> [TodoModel]
+    func fetch() async -> [TodoDTO]
 
     /// データの追加
     /// - parameters:
-    ///  - title: タイトル
-    ///  - detail: 詳細情報
-    func insert(id: UUID, title: String, detail: String) async
+    /// - dto: 追加する情報を持ったDTO
+    func insert(dto: TodoDTO) async
 
     /// TODOを削除する関数
     /// - parameters:
@@ -25,32 +23,30 @@ public protocol TodoRepositoryProtocol: Sendable {
 
     /// TODOの更新処理
     /// - parameters:
-    ///   - id: 更新対象のid
-    ///   - title: タイトル
-    ///   - detail: 詳細
-    ///   - isFinish: 完了したかどうか
-    func update(id: UUID, title: String, detail: String, isFinish: Bool) async
+    ///   - dto: 更新後の情報を持ったDTO
+    func update(dto: TodoDTO) async
 }
 
 /// TodoRepositoryのプレビュー用Mockクラス
-public struct MockTodoRepository: TodoRepositoryProtocol, Sendable {
+public struct MockTodoRepository: TodoRepositoryProtocol {
     public init() {}
 
-    public func fetch() -> [TodoModel] {
-        var todos = [TodoModel]()
+    public func fetch() -> [TodoDTO] {
+        var todos = [TodoDTO]()
         for index in 1...3 {
             todos.append(
-                TodoModel(
+                TodoDTO(
                     id: UUID(),
                     title: "タイトル \(index)",
-                    detail: "詳細 \(index)"
+                    detail: "詳細 \(index)",
+                    isFinish: false
                 )
             )
         }
         return todos
     }
 
-    public func insert(id: UUID, title: String, detail: String) async {
+    public func insert(dto: TodoDTO) async {
         debugPrint("insert!")
     }
 
@@ -58,7 +54,7 @@ public struct MockTodoRepository: TodoRepositoryProtocol, Sendable {
         debugPrint("delete!")
     }
 
-    public func update(id: UUID, title: String, detail: String, isFinish: Bool) async {
+    public func update(dto: TodoDTO) async {
         debugPrint("update!")
     }
 }

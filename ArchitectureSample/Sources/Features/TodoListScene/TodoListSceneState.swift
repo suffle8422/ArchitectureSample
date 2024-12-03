@@ -14,7 +14,7 @@ import Core
 public final class TodoListSceneState {
     @ObservationIgnored let router: any RouterProtocol
     let todoRepository: any TodoRepositoryProtocol
-    var todos = [TodoModel]()
+    var todos = [TodoDTO]()
 
     public init(
         router: any RouterProtocol,
@@ -25,11 +25,17 @@ public final class TodoListSceneState {
     }
 
     func fetchTodos() async {
-        todos = todoRepository.fetch()
+        todos = await todoRepository.fetch()
     }
 
     func insertTodo() async {
-        await todoRepository.insert(id: UUID(), title: Date().formattedString, detail: "詳細情報")
-        todos = todoRepository.fetch()
+        let todo = TodoDTO(
+            id: UUID(),
+            title: Date().formattedString,
+            detail: "詳細情報",
+            isFinish: false
+        )
+        await todoRepository.insert(dto: todo)
+        todos = await todoRepository.fetch()
     }
 }

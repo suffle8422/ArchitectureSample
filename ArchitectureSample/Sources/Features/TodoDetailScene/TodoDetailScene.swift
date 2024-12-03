@@ -61,7 +61,7 @@ public struct TodoDetailScene: View {
 }
 
 private extension TodoDetailScene {
-    func modelInfoView(model: TodoModel) -> some View {
+    func modelInfoView(model: TodoDTO) -> some View {
         VStack {
             Text("id: \(model.id)")
             Text("タイトル: \(model.title)")
@@ -74,10 +74,11 @@ private extension TodoDetailScene {
 #Preview {
     TodoDetailScene(
         state: TodoDetailSceneState(
-            model: TodoModel(
+            model: TodoDTO(
                 id: UUID(),
                 title: "タイトル",
-                detail: "詳細"
+                detail: "詳細",
+                isFinish: false
             ),
             todoRepository: MockTodoRepository()
         )

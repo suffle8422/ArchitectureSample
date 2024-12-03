@@ -17,22 +17,23 @@ class MockTodoRepository: TodoRepositoryProtocol, @unchecked Sendable {
     var countDelete = 0
     var countUpdate = 0
 
-    func fetch() -> [TodoModel] {
+    func fetch() -> [TodoDTO] {
         countFetch += 1
-        var todos = [TodoModel]()
+        var todos = [TodoDTO]()
         for index in 1...3 {
             todos.append(
-                TodoModel(
+                TodoDTO(
                     id: UUID(),
                     title: "タイトル \(index)",
-                    detail: "詳細 \(index)"
+                    detail: "詳細 \(index)",
+                    isFinish: false
                 )
             )
         }
         return todos
     }
     
-    func insert(id: UUID, title: String, detail: String) async {
+    func insert(dto: TodoDTO) async {
         countInsert += 1
         debugPrint("insert!")
     }
@@ -42,7 +43,7 @@ class MockTodoRepository: TodoRepositoryProtocol, @unchecked Sendable {
         debugPrint("delete!")
     }
 
-    func update(id: UUID, title: String, detail: String, isFinish: Bool) async {
+    func update(dto: TodoDTO) async {
         countUpdate += 1
         debugPrint("update!")
     }

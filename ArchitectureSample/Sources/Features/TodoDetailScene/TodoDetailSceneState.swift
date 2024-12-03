@@ -12,13 +12,13 @@ import Core
 @MainActor
 @Observable
 public final class TodoDetailSceneState {
-    var model: TodoModel
+    var model: TodoDTO
     let todoRepository: any TodoRepositoryProtocol
 
     var isShownDeleteAlert = false
 
     public init(
-        model: TodoModel,
+        model: TodoDTO,
         todoRepository: any TodoRepositoryProtocol
     ) {
         self.model = model
@@ -26,12 +26,14 @@ public final class TodoDetailSceneState {
     }
 
     func toggleFinishFlg() async {
-        await todoRepository.update(
+        let updatedTodo = TodoDTO(
             id: model.id,
             title: model.title,
             detail: model.detail,
             isFinish: !model.isFinish
         )
+        await todoRepository.update(dto: updatedTodo)
+        model = updatedTodo
     }
 
     func deleteTodo() async {

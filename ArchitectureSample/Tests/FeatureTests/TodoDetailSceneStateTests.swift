@@ -14,17 +14,18 @@ import Testing
 @MainActor
 struct TodoDetailSceneStateTests {
     let mockTodoRepository = MockTodoRepository()
-    let todoModel: TodoModel
+    let todo: TodoDTO
     let sceneState: TodoDetailSceneState
 
     init() {
-        todoModel = TodoModel(
+        todo = TodoDTO(
             id: UUID(),
             title: "タイトル",
-            detail: "詳細"
+            detail: "詳細",
+            isFinish: false
         )
         self.sceneState = TodoDetailSceneState(
-            model: todoModel,
+            model: todo,
             todoRepository: mockTodoRepository
         )
     }
@@ -32,7 +33,7 @@ struct TodoDetailSceneStateTests {
     @Test
     func toggleFinishFlg() async {
         await sceneState.toggleFinishFlg()
-        #expect(!todoModel.isFinish, "isFinishプロパティがfalseになっている")
+        #expect(!todo.isFinish, "isFinishプロパティがfalseになっている")
         #expect(await mockTodoRepository.countUpdate == 1, "update関数が1度だけ呼び出されている")
     }
 
