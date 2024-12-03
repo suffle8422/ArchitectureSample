@@ -12,7 +12,9 @@ let package = Package(
 )
 
 package.products = [
-    .library(name: .app, targets: [.app])
+    .library(name: .app, targets: [.app]),
+    .library(name: .todoListScene, targets: [.todoListScene]),
+    .library(name: .todoDetailScene, targets: [.todoDetailScene])
 ]
 
 package.targets = [

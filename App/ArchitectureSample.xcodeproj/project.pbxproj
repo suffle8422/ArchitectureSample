@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4D8D6782CFE8E070012D55F /* TodoDetailScene in Frameworks */ = {isa = PBXBuildFile; productRef = D4D8D6772CFE8E070012D55F /* TodoDetailScene */; };
+		D4D8D67A2CFE8E070012D55F /* TodoListScene in Frameworks */ = {isa = PBXBuildFile; productRef = D4D8D6792CFE8E070012D55F /* TodoListScene */; };
 		D4DACEAE2CFB0E1F00FE498E /* App in Frameworks */ = {isa = PBXBuildFile; productRef = D4DACEAD2CFB0E1F00FE498E /* App */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4D8D6782CFE8E070012D55F /* TodoDetailScene in Frameworks */,
+				D4D8D67A2CFE8E070012D55F /* TodoListScene in Frameworks */,
 				D4DACEAE2CFB0E1F00FE498E /* App in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +98,8 @@
 			name = ArchitectureSample;
 			packageProductDependencies = (
 				D4DACEAD2CFB0E1F00FE498E /* App */,
+				D4D8D6772CFE8E070012D55F /* TodoDetailScene */,
+				D4D8D6792CFE8E070012D55F /* TodoListScene */,
 			);
 			productName = ArchitectureSample;
 			productReference = D4EE31F52CFB058D00D70D98 /* ArchitectureSample.app */;
@@ -357,6 +363,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D4D8D6772CFE8E070012D55F /* TodoDetailScene */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TodoDetailScene;
+		};
+		D4D8D6792CFE8E070012D55F /* TodoListScene */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TodoListScene;
+		};
 		D4DACEAD2CFB0E1F00FE498E /* App */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = App;
