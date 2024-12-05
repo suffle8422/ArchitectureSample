@@ -10,13 +10,14 @@ import Core
 import Repository
 
 /// アプリ全体で共通して利用するインスタンスを保持するコンテナ
-public final class AppEnvironment: Sendable {
+@MainActor
+public final class AppEnvironment {
     public static let shared: AppEnvironment = AppEnvironment()
 
     public let router: any RouterProtocol = Router()
-
     public let modelContainer: ModelContainer
-    public let todoRepository: any TodoRepositoryProtocol
+    
+    let todoRepository: any TodoRepositoryProtocol
 
     public init() {
         let schema = Schema([TodoModel.self])

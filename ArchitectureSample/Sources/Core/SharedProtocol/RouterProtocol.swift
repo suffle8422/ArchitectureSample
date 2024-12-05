@@ -8,13 +8,12 @@
 import SwiftUI
 
 @MainActor
-public protocol RouterProtocol: Sendable {
+public protocol RouterProtocol {
     /// AppSceneに対応したViewを型消去して返す関数
     func show(_ scene: AppScene) -> AnyView
 }
 
 /// Routerのプレビュー用Mockクラス
-@MainActor
 public struct MockRouter: RouterProtocol {
     public init() {}
     

@@ -10,7 +10,7 @@ import SwiftData
 import Core
 
 @ModelActor
-public final actor TodoRepository: TodoRepositoryProtocol, Sendable {
+public final actor TodoRepository: TodoRepositoryProtocol {
     public func fetch() -> [TodoDTO] {
         let fetchDescriptor = FetchDescriptor<TodoModel>()
         let todos = try? modelContext.fetch(fetchDescriptor)
