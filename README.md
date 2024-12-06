@@ -52,6 +52,29 @@ routerでは画面の数だけswitch文で分岐するような構造になっ�
 処理内容としてはsceneStateに必要なオブジェクトをDIした後に、sceneを作成して返しているだけなので複雑な処理はしていない。
 
 ## その他
+### iOS版クックパッドアプリが採用しているアーキテクチャとの違い
+このアーキテクチャはiOS版クックパッドで採用されているアーキテクチャを参考に作成しています。
+詳しくは[こちらの記事](https://techlife.cookpad.com/entry/2021/06/16/110000)をご参照ください
+このアーキテクチャを参考にするにあたって解決したかった点が2点ありました
+- AppEnvironment.resolveの実装忘れがクラッシュにつながってしまう
+- AppEnvironmentoを各FeatureにDIしている
+それぞれ説明します。
+
+#### AppEnvironment.resolveの実装忘れがクラッシュにつながってしまう
+クックパッドのアーキテクチャでは、`AppEnvironment.resolve`を利用して具体実装を取り出しています。
+このとき、resolveに対応するViewDescriptorの処理を書き忘れるとクラッシュしてしまいます。
+クックパッドではこの問題点をSourceryデコードを自動生成することで解決していました
+ただ、個人開発ではリソースも限られているので言語の仕組みで解決したいです。
+そこで、`AppScene`というenumを使って遷移できる画面を網羅しました。
+このようにすることで、具体実装を取り出す`Router.show`ではAppSceneを全て網羅しないとコンパイルエラーとなるようにしました。
+
+#### AppEnvironmentoを各FeatureにDIしている
+SwiftUIで実装するにあたってはAppEnvironmentを直接FeatureにDIしたくありませんでした。
+理由としては、アプリ全体で必要な依存全てを、個別のFeatureにDIする必要は本来ないはずです。
+マルチモジュール構成では、モジュール単位の依存は明確になりますが、それ以上詳しい依存関係は担保できません。
+DIコンテナをDIすることで、例えば全てのFeatureから全てのRepositoryにアクセスできる状態になってしまい、安全とは言えません
+SampleArchitectureでは、愚直なやり方ですがイニシャライザインジェクションで必要な依存のみを注入しています。
+
 ### Repository/sceneState間のデータの受け渡し
 `actor isolated`したrepositoryと、`MainActor isolated`したSceneState間でデータを受け渡す際、actor境界をまたぐことになる。
 受け渡す型をSendableにする、値の取得を行う関数をnonisolatedにするなどの対策が必要。
