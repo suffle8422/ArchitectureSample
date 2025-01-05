@@ -10,14 +10,16 @@ iOSアプリをマルチモジュールで開発する際のアーキテクチ�
 アプリ全体の共通知識を配置するモジュール。
 あらゆるモジュールが参照することができる。
 他のモジュールに依存しない。
+RepositoryのProtocolなどを定義し、依存を逆転させることでFeatuerモジュールが具体実装に依存しないようにしている
 
 ### CoreUI
 複数のFeatureモジュールで利用する共通UIを配置するモジュール。
 Coreモジュール以外には依存しない。
 
 ### Repository
-Repositoryを実装するモジュール。
-Featureモジュールは自由に参照できる。
+Repositoryの具体実装を提供するモジュール。
+Featuersモジュールは、依存の方向を逆転させることでRepositoryモジュールへの直接依存を避けている
+Appモジュールより、Featureモジュールに具体実装を注入する。
 
 ### Features
 各画面の実装を行うモジュール。
@@ -64,9 +66,11 @@ routerでは画面の数だけswitch文で分岐するような構造になっ�
 クックパッドのアーキテクチャでは、`AppEnvironment.resolve`を利用して具体実装を取り出しています。
 このとき、resolveに対応するViewDescriptorの処理を書き忘れるとクラッシュしてしまいます。
 クックパッドではこの問題点をSourceryデコードを自動生成することで解決していました
-ただ、個人開発ではリソースも限られているので言語の仕組みで解決したいです。
+ただ、個人開発ではリソースも限られているので、メンテコストがかさみそうなライブラリは多様せず、言語の仕組みで解決したいです。
 そこで、`AppScene`というenumを使って遷移できる画面を網羅しました。
 このようにすることで、具体実装を取り出す`Router.show`ではAppSceneを全て網羅しないとコンパイルエラーとなるようにしました。
+デメリットとして、enumの引数としてクロージャーを渡そうとすると、Hashableに準拠できなくなります。
+NavigationStackのpathに`AppScene`を利用したい場合など、Hashableに準拠したい場合にはクックパッドの記事で紹介されているように`ViewDescriptor`を`struct`で実装する方法を利用してください。
 
 #### AppEnvironmentoを各FeatureにDIしている
 SwiftUIで実装するにあたってはAppEnvironmentを直接FeatureにDIしたくありませんでした。
@@ -74,6 +78,7 @@ SwiftUIで実装するにあたってはAppEnvironmentを直接FeatureにDIし�
 マルチモジュール構成では、モジュール単位の依存は明確になりますが、それ以上詳しい依存関係は担保できません。
 DIコンテナをDIすることで、例えば全てのFeatureから全てのRepositoryにアクセスできる状態になってしまい、安全とは言えません
 SampleArchitectureでは、愚直なやり方ですがイニシャライザインジェクションで必要な依存のみを注入しています。
+swift-dependenciesなど、DIライブラリを利用することでイニシャライザインジェクションの煩わしさを解消したり、よりtestableになったりすると思うので採用するのも良いと思います。
 
 ### Repository/sceneState間のデータの受け渡し
 `actor isolated`したrepositoryと、`MainActor isolated`したSceneState間でデータを受け渡す際、actor境界をまたぐことになる。
@@ -82,6 +87,8 @@ SampleArchitectureでは、愚直なやり方ですがイニシャライザイ�
 このサンプルでは、SwiftDataで値を保存しているが、modelクラスはスレッドセーフではないのでSendableにできない。
 Repository側で、SendableなDTOオブジェクトに変換してから渡したり、値を取得する関数だけnonisolatedにしたりする必要がある。
 このサンプルでは、SendableなDTOを用意して、SwiftDataのModelはRepositoryモジュール内に閉じ込めている。
+SampleArchitectureでは愚直に実装しているが、SwiftDataをModelActorで扱いつつ任意のSendableな型を返すライブラリ[async-SwiftData](https://github.com/suffle8422/async-SwiftData)を公開しているので良ければご利用ください。
+issueやPRもお待ちしています
 
 ### Realmを利用した場合のRepository/SceneState間のデータの受け渡し
 realmを利用する場合は、results型をcombineのpublisherに変換することで任意のクエリの結果に変化があれば通知される。
@@ -94,4 +101,4 @@ var publisher: AnyPublisher<Results<HogeModel>, any Error> {
 
 SwiftDataを利用する場合、sceneState内で`@query`が利用できない。
 また、combineを利用して更新通知を受け取ることは2024-12-01現在ではできない。
-手動でfetchするか、notificationCenterからdidSave通知を受け取ってから更新する必要がある。
+手動でfetchする、notificationCenterからdidSave通知を受け取ってから更新する、notificationCenterに任意の通知を追加するなど工夫する必要がある。
