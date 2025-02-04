@@ -14,12 +14,12 @@ import Repository
 public final class AppEnvironment {
     public static let shared: AppEnvironment = AppEnvironment()
 
-    public let router: any RouterProtocol = Router()
     public let modelContainer: ModelContainer
     
+    let router: any RouterProtocol = Router()
     let todoRepository: any TodoRepositoryProtocol
 
-    public init() {
+    private init() {
         let schema = Schema([TodoModel.self])
         let modelConfiguration = ModelConfiguration(schema: schema)
         modelContainer = try! ModelContainer(for: schema, configurations: modelConfiguration)

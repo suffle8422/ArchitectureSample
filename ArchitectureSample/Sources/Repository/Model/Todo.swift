@@ -10,13 +10,13 @@ import SwiftData
 import Core
 
 @Model
-public class TodoModel {
-    @Attribute(.unique) public var id: UUID
-    public var title: String
-    public var detail: String
-    public var isFinish: Bool
+package class TodoModel {
+    @Attribute(.unique) package var id: UUID
+    package var title: String
+    package var detail: String
+    package var isFinish: Bool
 
-    public init(
+    package init(
         id: UUID,
         title: String,
         detail: String,
@@ -28,7 +28,7 @@ public class TodoModel {
         self.isFinish = isFinish
     }
 
-    public func makeDTO() -> TodoDTO {
+    package func makeDTO() -> TodoDTO {
         return TodoDTO(
             id: id,
             title: title,

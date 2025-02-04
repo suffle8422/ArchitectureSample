@@ -7,7 +7,7 @@
 
 /// 遷移先に指定できる画面を表すenumクラス
 /// 画面の生成に必要な情報もここで受け取る
-public enum AppScene: Hashable {
+package enum AppScene: Hashable {
     case todoListScene
     case todoDetailScene(model: TodoDTO)
 }

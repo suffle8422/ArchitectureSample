@@ -9,15 +9,15 @@ import SwiftUI
 import Core
 import Repository
 
-public struct TodoDetailScene: View {
+package struct TodoDetailScene: View {
     @State var state: TodoDetailSceneState
     @Environment(\.dismiss) private var dismiss
 
-    public init(state: TodoDetailSceneState) {
+    package init(state: TodoDetailSceneState) {
         self.state = state
     }
 
-    public var body: some View {
+    package var body: some View {
         VStack {
             modelInfoView(model: state.model)
             Button(

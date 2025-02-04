@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    public var formattedString: String {
+    package var formattedString: String {
         let dateFormatter = makeFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
         return dateFormatter.string(from: self)
     }

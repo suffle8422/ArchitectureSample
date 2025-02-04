@@ -9,28 +9,36 @@ import Foundation
 import SwiftData
 import Core
 
-@ModelActor
-public final actor TodoRepository: TodoRepositoryProtocol {
-    public func fetch() -> [TodoDTO] {
+package final actor TodoRepository: ModelActor, TodoRepositoryProtocol {
+    nonisolated package let modelExecutor: any SwiftData.ModelExecutor
+    nonisolated package let modelContainer: SwiftData.ModelContainer
+
+    package init(modelContainer: SwiftData.ModelContainer) {
+        let modelContext = ModelContext(modelContainer)
+        self.modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
+        self.modelContainer = modelContainer
+    }
+
+    package func fetch() -> [TodoDTO] {
         let fetchDescriptor = FetchDescriptor<TodoModel>()
         let todos = try? modelContext.fetch(fetchDescriptor)
         guard let todos else { return [] }
         return todos.map { $0.makeDTO() }
     }
 
-    public func insert(dto: TodoDTO) {
+    package func insert(dto: TodoDTO) {
         let todoModel = TodoModel(id: dto.id, title: dto.title, detail: dto.detail, isFinish: dto.isFinish)
         modelContext.insert(todoModel)
         try? modelContext.save()
     }
 
-    public func delete(id: UUID) {
+    package func delete(id: UUID) {
         guard let todo = get(id: id) else { return }
         modelContext.delete(todo)
         try? modelContext.save()
     }
 
-    public func update(dto: TodoDTO) {
+    package func update(dto: TodoDTO) {
         guard let todo = get(id: dto.id) else { return }
         todo.title = dto.title
         todo.detail = dto.detail

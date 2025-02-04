@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol TodoRepositoryProtocol: Sendable {
+package protocol TodoRepositoryProtocol: Sendable {
     /// 保存されているTODOを全件取得する関数
     func fetch() async -> [TodoDTO]
 
@@ -28,10 +28,10 @@ public protocol TodoRepositoryProtocol: Sendable {
 }
 
 /// TodoRepositoryのプレビュー用Mockクラス
-public struct MockTodoRepository: TodoRepositoryProtocol {
-    public init() {}
+package struct MockTodoRepository: TodoRepositoryProtocol {
+    package init() {}
 
-    public func fetch() -> [TodoDTO] {
+    package func fetch() -> [TodoDTO] {
         var todos = [TodoDTO]()
         for index in 1...3 {
             todos.append(
@@ -46,15 +46,15 @@ public struct MockTodoRepository: TodoRepositoryProtocol {
         return todos
     }
 
-    public func insert(dto: TodoDTO) async {
+    package func insert(dto: TodoDTO) async {
         debugPrint("insert!")
     }
 
-    public func delete(id: UUID) async {
+    package func delete(id: UUID) async {
         debugPrint("delete!")
     }
 
-    public func update(dto: TodoDTO) async {
+    package func update(dto: TodoDTO) async {
         debugPrint("update!")
     }
 }

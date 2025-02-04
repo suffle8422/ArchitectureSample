@@ -8,16 +8,16 @@
 import SwiftUI
 
 @MainActor
-public protocol RouterProtocol {
+package protocol RouterProtocol {
     /// AppSceneに対応したViewを型消去して返す関数
     func show(_ scene: AppScene) -> AnyView
 }
 
 /// Routerのプレビュー用Mockクラス
-public struct MockRouter: RouterProtocol {
-    public init() {}
-    
-     public func show(_ scene: AppScene) -> AnyView {
+package struct MockRouter: RouterProtocol {
+    package init() {}
+
+     package func show(_ scene: AppScene) -> AnyView {
         AnyView(Text("MockRouter"))
     }
 }

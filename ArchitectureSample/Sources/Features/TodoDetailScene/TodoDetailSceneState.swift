@@ -11,13 +11,13 @@ import Core
 
 @MainActor
 @Observable
-public final class TodoDetailSceneState {
+package final class TodoDetailSceneState {
     var model: TodoDTO
     let todoRepository: any TodoRepositoryProtocol
 
     var isShownDeleteAlert = false
 
-    public init(
+    package init(
         model: TodoDTO,
         todoRepository: any TodoRepositoryProtocol
     ) {

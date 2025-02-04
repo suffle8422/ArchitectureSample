@@ -11,12 +11,12 @@ import Core
 
 @MainActor
 @Observable
-public final class TodoListSceneState {
+package final class TodoListSceneState {
     @ObservationIgnored let router: any RouterProtocol
     let todoRepository: any TodoRepositoryProtocol
     var todos = [TodoDTO]()
 
-    public init(
+    package init(
         router: any RouterProtocol,
         todoRepository: any TodoRepositoryProtocol
     ) {

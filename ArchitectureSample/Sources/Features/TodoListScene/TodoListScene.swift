@@ -8,14 +8,14 @@
 import SwiftUI
 import Core
 
-public struct TodoListScene: View {
+package struct TodoListScene: View {
     @State var state: TodoListSceneState
 
-    public init(state: TodoListSceneState) {
+    package init(state: TodoListSceneState) {
         self.state = state
     }
 
-    public var body: some View {
+    package var body: some View {
         NavigationStack {
             todoListView()
                 .navigationTitle("TODOリスト")

@@ -11,7 +11,7 @@ import Core
 /// Routerのテスト用Mockクラス
 @MainActor
 struct MockRouter: RouterProtocol {
-    public func show(_ scene: AppScene) -> AnyView {
+    package func show(_ scene: AppScene) -> AnyView {
         AnyView(Text("MockRouter"))
     }
 }
