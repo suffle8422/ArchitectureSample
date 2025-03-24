@@ -11,11 +11,10 @@ import Repository
 
 /// アプリ全体で共通して利用するインスタンスを保持するコンテナ
 @MainActor
-public final class AppEnvironment {
-    public static let shared: AppEnvironment = AppEnvironment()
+final class AppEnvironment {
+    static let shared: AppEnvironment = AppEnvironment()
 
-    public let modelContainer: ModelContainer
-    
+    let modelContainer: ModelContainer
     let router: any RouterProtocol = Router()
     let todoRepository: any TodoRepositoryProtocol
 

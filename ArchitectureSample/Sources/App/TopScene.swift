@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 public struct TopScene: View {
     public init() {}
 
     public var body: some View {
         AppEnvironment.shared.router.show(.todoListScene)
+            .modelContainer(AppEnvironment.shared.modelContainer)
     }
 }

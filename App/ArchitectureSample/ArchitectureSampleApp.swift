@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 import App
 import Core
 
@@ -15,7 +14,6 @@ struct ArchitectureSampleApp: App {
     var body: some Scene {
         WindowGroup {
             TopScene()
-                .modelContainer(AppEnvironment.shared.modelContainer)
         }
     }
 }
