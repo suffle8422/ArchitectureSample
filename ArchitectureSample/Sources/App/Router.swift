@@ -12,8 +12,8 @@ import TodoListScene
 import TodoDetailScene
 
 /// AppSceneからViewを取り出すためのオブジェクト
-package struct Router: RouterProtocol {
-    package func show(_ scene: AppScene) -> AnyView {
+struct Router: RouterProtocol {
+    func show(_ scene: AppScene) -> AnyView {
         let sceneView = makeSceneView(scene)
         return AnyView(sceneView)
     }
